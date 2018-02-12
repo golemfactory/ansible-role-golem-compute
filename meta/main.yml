@@ -16,7 +16,7 @@ galaxy_info:
     - golem-compute
     - compute
 
-dependencies:
-  - { role: golem-docker }
-  - { role: golem-ethereum }
-  - { role: golem-hyperdrive }
+  dependencies:
+    - { role: golemfactory.golem-docker }
+    - { role: golemfactory.golem-ethereum }
+    - { role: golemfactory.golem-hyperdrive }
