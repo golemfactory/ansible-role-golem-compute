@@ -1,0 +1,8 @@
+---
+# vars file for golem-compute
+
+golem_compute_nogui: "{{ golem_compute_version | version_compare('0.9.0', '<') | ternary('--nogui', '') }}"
+golem_compute_release_url: "{{ golem_compute_release_dev | ternary(golem_compute_release_url_dev, golem_compute_release_url_rel) }}"
+golem_compute_config_default:
+  "rpc port": "61001"
+  "node name": "{{ inventory_hostname }} compute"

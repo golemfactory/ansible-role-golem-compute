@@ -1,0 +1,17 @@
+[Unit]
+Description=Golem
+After=network.target hyperdrive.service
+
+[Service]
+Type=simple
+User={{ golem_compute_user }}
+ExecStart={{ golem_compute_path }}/golem-{{ golem_compute_version }}/golemapp {{ golem_compute_nogui }} -d {{ golem_compute_config_path }} {{ golem_compute_unit_extra_args }}
+WorkingDirectory={{ golem_compute_path }}/golem-{{ golem_compute_version }}
+Environment="LC_ALL=C.UTF-8"
+Environment="LANG=C.UTF-8"
+LimitNOFILE=65536
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

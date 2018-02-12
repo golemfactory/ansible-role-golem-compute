@@ -1,0 +1,102 @@
+---
+# tasks file for golem-compute
+
+- name: create group
+  become: yes
+  group:
+    name: "{{ golem_compute_user_group }}"
+    system: yes
+    state: present
+
+- name: create user
+  become: yes
+  user:
+    name: "{{ golem_compute_user }}"
+    home: "{{ golem_compute_user_home }}"
+    system: yes
+    group: "{{ golem_compute_user_group }}"
+    groups: docker
+    append: yes
+    state: present
+
+- name: stop
+  when: golem_compute_reinstall
+  become: yes
+  systemd:
+    name: "{{ golem_compute_unit_name }}"
+    state: stopped
+
+- name: cleanup
+  when: golem_compute_reinstall
+  become: yes
+  file:
+    path: "{{ golem_compute_path }}/golem-{{ golem_compute_version }}"
+    state: absent
+
+- name: cleanup config
+  when: golem_compute_reinstall
+  become: yes
+  file:
+    path: "{{ golem_compute_config_path }}"
+    state: absent
+
+- name: create directory for golem
+  become: yes
+  file:
+    path: "{{ golem_compute_path }}"
+    state: directory
+    owner: "{{ golem_compute_user }}"
+    group: "{{ golem_compute_user_group }}"
+
+- name: unpack release archive
+  become: yes
+  unarchive:
+    src: "{{ golem_compute_release_url }}"
+    dest: "{{ golem_compute_path }}"
+    remote_src: yes
+    creates: "{{ golem_compute_path }}/golem-{{ golem_compute_version }}"
+    owner: "{{ golem_compute_user }}"
+    group: "{{ golem_compute_user_group }}"
+
+- name: create directory for golem_compute config
+  become: yes
+  file:
+    path: "{{ golem_compute_config_path }}"
+    state: directory
+    owner: "{{ golem_compute_user }}"
+    group: "{{ golem_compute_user_group }}"
+
+- name: create bare config file
+  become: yes
+  copy:
+    content: |
+      [Node]
+    dest: "{{ golem_compute_config_path }}/app_cfg.ini"
+    force: no
+    owner: "{{ golem_compute_user }}"
+    group: "{{ golem_compute_user_group }}"
+
+- name: configure golem_compute
+  become: yes
+  with_dict: "{{ golem_compute_config_default | default({}) | combine(golem_compute_config) }}"
+  lineinfile:
+    path: "{{ golem_compute_config_path }}/app_cfg.ini"
+    state: present
+    regexp: "^{{ item.key }} = "
+    line: "{{ item.key }} = {{ item.value }}"
+  notify: restart golem_compute
+
+- name: create systemd unit
+  become: yes
+  template:
+    src: golem.service.j2
+    dest: "/etc/systemd/system/{{ golem_compute_unit_name }}.service"
+  notify: restart golem_compute
+
+- name: start golem_compute
+  become: yes
+  systemd:
+    daemon_reload: yes
+    name: "{{ golem_compute_unit_name }}"
+    state: started
+    enabled: yes
