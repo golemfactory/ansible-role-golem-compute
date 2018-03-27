@@ -2,7 +2,7 @@
 # defaults file for golem-compute
 
 golem_compute_config: {}
-golem_compute_config_path: "{{ golem_compute_user_home }}/.local/share/golem/{{ golem_compute_unit_name }}"
+golem_compute_config_dir: "{{ golem_compute_user_home }}/.local/share/golem/{{ golem_compute_unit_name }}"
 golem_compute_path: "{{ golem_compute_user_home }}"
 golem_compute_reinstall: False
 golem_compute_release_dev: False

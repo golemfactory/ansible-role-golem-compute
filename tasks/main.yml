@@ -37,7 +37,7 @@
   when: golem_compute_reinstall
   become: yes
   file:
-    path: "{{ golem_compute_config_path }}"
+    path: "{{ golem_compute_config_dir }}"
     state: absent
 
 - name: create directory for golem
@@ -61,7 +61,7 @@
 - name: create directory for golem_compute config
   become: yes
   file:
-    path: "{{ golem_compute_config_path }}"
+    path: "{{ golem_compute_config_dir }}"
     state: directory
     owner: "{{ golem_compute_user }}"
     group: "{{ golem_compute_user_group }}"
