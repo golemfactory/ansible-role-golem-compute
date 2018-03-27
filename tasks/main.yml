@@ -66,6 +66,14 @@
     owner: "{{ golem_compute_user }}"
     group: "{{ golem_compute_user_group }}"
 
+- name: create directory for golem_compute config path
+  become: yes
+  file:
+    path: "{{ golem_compute_config_path }}"
+    state: directory
+    owner: "{{ golem_compute_user }}"
+    group: "{{ golem_compute_user_group }}"
+
 - name: create bare config file
   become: yes
   copy:
