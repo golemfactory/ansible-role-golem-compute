@@ -25,6 +25,7 @@
   systemd:
     name: "{{ golem_compute_unit_name }}"
     state: stopped
+  notify: restart golem
 
 - name: cleanup
   when: golem_compute_reinstall
