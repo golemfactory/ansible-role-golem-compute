@@ -27,6 +27,25 @@
     state: stopped
   notify: restart golem
 
+- name: create keystore backup directory
+  # when: golem_compute_reinstall
+  become: yes
+  file:
+    path: "{{ golem_compute_keystore_backup_path }}"
+    state: directory
+    owner: "{{ golem_compute_user }}"
+    group: "{{ golem_compute_user_group }}"
+
+- name: create current date keystore directory
+  # when: golem_compute_reinstall
+  become: yes
+  command: "mkdir -p {{ golem_compute_keystore_backup_path}}/$(date +'%d%m%Y_%H%M')"
+
+- name: backup keystore files
+  # when: golem_compute_reinstall
+  become: yes
+  command: "cp -rf {{ golem_compute_config_path }}/keys {{ golem_compute_keystore_backup_path}}/$(date +'%d%m%Y_%H%M')/"
+
 - name: cleanup
   when: golem_compute_reinstall
   become: yes
