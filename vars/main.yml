@@ -8,3 +8,4 @@ golem_compute_config_default:
   "node name": "{{ inventory_hostname }} compute"
 # FIXME: This has to be changed for mainnet
 golem_compute_config_path: "{{ golem_compute_config_dir }}/rinkeby"
+current_date_time: "{{ ansible_date_time['day'] }}{{ ansible_date_time['month'] }}{{ ansible_date_time['year'] }}_{{ ansible_date_time['hour'] }}{{ ansible_date_time['minute'] }}"
