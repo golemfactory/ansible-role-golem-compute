@@ -8,7 +8,7 @@ golem_compute_reinstall: False
 golem_compute_release_dev: False
 golem_compute_release_url_dev: "https://github.com/golemfactory/golem-dev/releases/download/{{ golem_compute_version }}/golem-{{ golem_compute_version }}-linux.tar.gz"
 golem_compute_release_url_rel: "https://github.com/golemfactory/golem/releases/download/{{ golem_compute_version }}/golem-{{ golem_compute_version }}-linux.tar.gz"
-golem_compute_unit_extra_args: ""
+golem_compute_unit_extra_args: "--accept-terms"
 golem_compute_unit_name: golem_compute
 golem_compute_user: golem
 golem_compute_user_group: "{{ golem_compute_user }}"
