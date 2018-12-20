@@ -49,6 +49,7 @@
   # when: golem_compute_reinstall
   become: yes
   command: "cp -rf {{ golem_compute_config_path }}/keys {{ golem_compute_keystore_backup_path}}/{{ current_date_time }}/"
+  ignore_errors: yes
 
 - name: cleanup
   when: golem_compute_reinstall
