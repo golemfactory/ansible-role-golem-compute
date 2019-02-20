@@ -13,6 +13,6 @@ golem_compute_unit_name: golem_compute
 golem_compute_user: golem
 golem_compute_user_group: "{{ golem_compute_user }}"
 golem_compute_user_home: "/home/{{ golem_compute_user }}"
-golem_compute_version: "0.18.3"
+golem_compute_version: "0.19.0"
 golem_compute_keystore_backup_path: "/backup_golem"
 
