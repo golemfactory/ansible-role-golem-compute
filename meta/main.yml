@@ -22,4 +22,4 @@ dependencies:
   - src: golemfactory.golem-ethereum
     version: v0.1.0
   - src: golemfactory.golem-hyperdrive
-    version: v0.1.1
+    version: v0.1.2
